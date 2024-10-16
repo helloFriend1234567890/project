@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitbit OAuth Callback</title>
+</head>
+<body>
+    <h1>Fitbit OAuth Callback</h1>
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+
+        if (error) {
+            console.error('OAuth Error:', error);
+            document.body.innerHTML += `<p>Error: ${error}</p>`;
+        } else if (code) {
+            console.log('Authorization code:', code);
+            // Fetch user data from the server
+            fetch(`/callback?code=${code}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('User Data:', data);
+                    document.body.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                })
+                .catch(err => console.error('Error fetching user data:', err));
+        } else {
+            document.body.innerHTML += `<p>No code or error found in the URL.</p>`;
+        }
+    </script>
+</body>
+</html>
