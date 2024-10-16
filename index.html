@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitbit OAuth Callback</title>
+</head>
+<body>
+    <h1>Fitbit OAuth Callback</h1>
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const error = urlParams.get('error');
+
+        if (error) {
+            // Handle errors here
+            console.error('OAuth Error:', error);
+            document.body.innerHTML += `<p>Error: ${error}</p>`;
+        } else if (code) {
+            // Use the authorization code to request an access token
+            console.log('Authorization code:', code);
+            // You can now send this code to your server to get an access token
+            document.body.innerHTML += `<p>Authorization code: ${code}</p>`;
+        } else {
+            document.body.innerHTML += `<p>No code or error found in the URL.</p>`;
+        }
+    </script>
+</body>
+</html>
